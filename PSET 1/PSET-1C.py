@@ -37,52 +37,11 @@ while(high-low>1):
         low = guess
         if(guess>=9999): 
             possible = False
+    else:
+        break
 
 if(possible):
-     print("Rate: " + str(guess*.01))
+     print("Rate: " + str(guess*.01) + "%")
      print("Steps: " + str(steps))
 else:
      print("Not possible")
-
-
-
-# bi_steps = 0
-# low = 0
-# high = 10000
-# epsilon = 100.0 
-# guess = (high+low)/2.0
-# possible = True
-# current_annual_salary = annual_salary
-# current_savings = 0
-# monthly_salary = annual_salary/12
-# months = 0
-# while(high-low > 1):
-#     bi_steps+=1
-#     guess = int((high+low)/2.0)
-#     money_left = run_simulation(guess)
-#     if(money_left < -epsilon):
-#         print("low", str(guess), "savings:", str(money_left)) #test
-#         high = guess
-#         current_savings = 0
-#         current_annual_salary = annual_salary
-#         monthly_salary = annual_salary/12
-#     elif(guess >= 9999 and money_left > epsilon):
-#         possible = False
-#         break
-#     elif(money_left > epsilon):
-#         print("high", str(guess), "savings:", str(total_cost*down_payment-current_savings)) #test
-#         low = guess
-#         current_savings = 0
-#         current_annual_salary = annual_salary
-#         monthly_salary = annual_salary/12
-#     else:
-#         break
-        
-# if(possible):
-#     print("Rate: " + str(guess*.01))
-#     print("money left:" + str(money_left))
-#     print("Steps: " + str(bi_steps))
-#     print("high" + str(high))
-#     print("low" + str(low))
-# else:
-#     print("Not possible")
