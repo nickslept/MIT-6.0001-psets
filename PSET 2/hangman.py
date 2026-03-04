@@ -1,14 +1,5 @@
-# Problem Set 2, hangman.py
-# Name: 
-# Collaborators:
-# Time spent:
+#pset 2 - hangman
 
-# Hangman Game
-# -----------------------------------
-# Helper code
-# You don't need to understand this helper code,
-# but you will have to know how to use the functions
-# (so be sure to read the docstrings!)
 import random
 import string
 
@@ -60,8 +51,13 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True if all the letters of secret_word are in letters_guessed;
       False otherwise
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    c = 0
+    for char in secret_word:
+        if char in letters_guessed:
+            c+=1
+    if c == len(secret_word):
+        return True
+    return False
 
 
 
@@ -73,7 +69,13 @@ def get_guessed_word(secret_word, letters_guessed):
       which letters in secret_word have been guessed so far.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    s = ""
+    for char in secret_word:
+        if char in letters_guessed:
+            s+=char
+        else:
+            s+="_ "
+    return s
 
 
 
@@ -83,9 +85,10 @@ def get_available_letters(letters_guessed):
     returns: string (of letters), comprised of letters that represents which letters have not
       yet been guessed.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-    
+    letters_not_guessed = list(string.ascii_lowercase)
+    for e in letters_guessed:
+        letters_not_guessed.remove(e)
+    return("".join(letters_not_guessed))
     
 
 def hangman(secret_word):
