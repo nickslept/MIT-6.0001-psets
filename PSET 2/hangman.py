@@ -68,7 +68,6 @@ def get_guessed_word(secret_word, letters_guessed):
     returns: string, comprised of letters, underscores (_), and spaces that represents
       which letters in secret_word have been guessed so far.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
     s = ""
     for char in secret_word:
         if char in letters_guessed:
@@ -116,8 +115,17 @@ def hangman(secret_word):
     
     Follows the other limitations detailed in the problem write-up.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    print("Welcome to the game Hangman!")
+    print("I am thinking of a word that is", str(len(secret_word)), "letters long.")
+    print("-------------")
+    letters_guessed = []
+    guesses_left = 6
+    while not is_word_guessed(secret_word, letters_guessed) and guesses_left > 0:
+        print("You have", str(guesses_left), "guesses left")
+        print("Available letters:", str(get_available_letters(letters_guessed)))
+        guesses_left -= 1
+        #still on part A
+hangman("apple")
 
 
 
@@ -199,13 +207,13 @@ def hangman_with_hints(secret_word):
 
 
 if __name__ == "__main__":
-    # pass
 
     # To test part 2, comment out the pass line above and
     # uncomment the following two lines.
     
-    secret_word = choose_word(wordlist)
-    hangman(secret_word)
+    #secret_word = choose_word(wordlist)
+    #hangman(secret_word)
+    pass
 
 ###############
     
