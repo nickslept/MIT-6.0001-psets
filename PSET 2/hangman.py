@@ -88,7 +88,30 @@ def get_available_letters(letters_guessed):
     for e in letters_guessed:
         letters_not_guessed.remove(e)
     return("".join(letters_not_guessed))
-    
+
+def check_and_give_warning(guess, letters_guessed, warnings_left):
+    '''
+    param guess: Description
+    param letters_guessed: Description
+    param warnings_left: Description
+    returns: 
+    '''
+    if not str.isalpha(guess):  
+        if warnings_left > 0:
+            print("Oops! That is not a valid letter. You have", str(warnings_left-1), "warnings left:", end = " ")
+        else:
+            print("Oops! That is not a valid letter. You have no warnings left so you lose one guess:", end = " ")
+        return True
+    elif guess.lower() in letters_guessed:
+        if warnings_left > 0:
+            print("Oops! You've already guessed that letter. You have", str(warnings_left-1), "warnings left:", end = " ")
+        else:
+            print("Oops! You've already guessed that letter. You have no warnings left so you lose one guess:", end = " ")
+        return True
+    elif guess.lower() in string.ascii_lowercase:
+        return False
+
+def proper_input(guess, letters_guessed, guesses_left):
 
 def hangman(secret_word):
     '''
@@ -115,16 +138,35 @@ def hangman(secret_word):
     
     Follows the other limitations detailed in the problem write-up.
     '''
-    print("Welcome to the game Hangman!")
-    print("I am thinking of a word that is", str(len(secret_word)), "letters long.")
-    print("-------------")
     letters_guessed = []
     guesses_left = 6
+    warnings_left = 3
+
+    print("Welcome to the game Hangman!")
+    print("I am thinking of a word that is", str(len(secret_word)), "letters long.")
+    print("You have", str(warnings_left), "warnings left.")
+    print("-------------")
+
     while not is_word_guessed(secret_word, letters_guessed) and guesses_left > 0:
         print("You have", str(guesses_left), "guesses left")
         print("Available letters:", str(get_available_letters(letters_guessed)))
-        guesses_left -= 1
-        #still on part A
+        guess = input("Please guess a letter: ")
+        if check_and_give_warning(guess, letters_guessed, warnings_left):
+            if warnings_left > 0:
+                warnings_left -= 1
+            else:
+                guesses_left -= 1
+            print(get_guessed_word(secret_word, letters_guessed))
+        else: #proper input
+            #maybe make a function handling this
+            if(guess in secret_word):
+                letters_guessed.append(guess.lower())
+                print(get_guessed_word(secret_word, letters_guessed))
+        print("-------------")
+
+
+
+        
 hangman("apple")
 
 
