@@ -175,4 +175,4 @@ def hangman(secret_word):
     else:
         print("Sorry, you ran out of guesses. The word was " + secret_word + ".")
 
-hangman("else")
+hangman("tact")
