@@ -1,5 +1,3 @@
-#pset 2 - hangman; REMEMBER TO CHECK THE COMMIT BEFORE 3/6 11:SOMETHING AM TO FIND THE CODE THAT WAS DELETED TEMPORARILY BELOW THE HANGMAN FUNCTION
-
 import random
 import string
 
@@ -148,7 +146,7 @@ def hangman(secret_word):
     print("-------------")
 
     while not is_word_guessed(secret_word, letters_guessed) and guesses_left > 0:
-        print("You have", str(guesses_left), "guesses left")
+        print("You have", str(guesses_left), "guesses left.")
         print("Available letters:", str(get_available_letters(letters_guessed)))
         guess = input("Please guess a letter: ")
         if check_and_give_warning(guess, letters_guessed, warnings_left):
@@ -159,7 +157,7 @@ def hangman(secret_word):
             print(get_guessed_word(secret_word, letters_guessed))
         else: #proper input and not guessed the letter yet
             letters_guessed.append(guess.lower())
-            if(guess in secret_word):
+            if(guess.lower() in secret_word):
                 print("Good guess:", get_guessed_word(secret_word, letters_guessed))
             else:
                 print("Oops! That letter is not in my word:", get_guessed_word(secret_word, letters_guessed)) #you need to fix this because the first e.g. and second e.g. have different formats for the thing ("Oops! That letter is not in my word." vs what u have rn was how it was in the second e.g.)
@@ -183,7 +181,13 @@ def hangman(secret_word):
 
 # -----------------------------------
 
-
+def populate_dicts_for_match_with_gaps(str, dict):
+    for char in str:
+        if char in dict:
+            dict[char] += 1
+        else:
+            dict[char] = 1
+    return dict
 
 def match_with_gaps(my_word, other_word):
     '''
@@ -194,10 +198,29 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-
-
+    trimmed_my_word = my_word.replace(" ", "")
+    if len(trimmed_my_word) != len(other_word): 
+        return False
+    else: 
+        my_word_dict = {}
+        other_word_dict = {}
+        my_word_dict = populate_dicts_for_match_with_gaps(trimmed_my_word, my_word_dict)
+        other_word_dict = populate_dicts_for_match_with_gaps(other_word, other_word_dict)
+        for key, value in my_word_dict.items(): #compares if the # of each correctly guessed char = the # of times they appear in the other word
+            if key == "_":
+                continue
+            else:
+                if key not in other_word_dict.keys():
+                    return False
+                elif other_word_dict[key] != value:
+                    return False
+        for i in range(len(trimmed_my_word)): #indexes through both strings and skip the _s to see if the order matches up
+            if trimmed_my_word[i] == "_":
+                continue
+            else:
+                if trimmed_my_word[i] != other_word[i]:
+                    return False
+    return True
 
 def show_possible_matches(my_word):
     '''
@@ -209,8 +232,8 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    
+    return
 
 
 
