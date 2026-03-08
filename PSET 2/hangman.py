@@ -232,10 +232,17 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
+    all_possible_matches = ""
+    for word in wordlist:
+        if match_with_gaps(my_word, word):
+            all_possible_matches += word + " "
     
-    return
-
-
+    if len(all_possible_matches) == 0:
+        print("No matches found")
+    else:
+        print(all_possible_matches)
+    
+    return None
 
 def hangman_with_hints(secret_word):
     '''
