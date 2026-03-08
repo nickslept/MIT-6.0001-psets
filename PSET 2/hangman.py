@@ -332,8 +332,6 @@ def hangman_with_hints(secret_word):
         print("Sorry, you ran out of guesses. The word was " + secret_word + ".")
     pass
 
-hangman_with_hints("apple")
-
 # When you've completed your hangman_with_hint function, comment the two similar
 # lines above that were used to run the hangman function, and then uncomment
 # these two lines and run this file to test!
@@ -354,5 +352,5 @@ if __name__ == "__main__":
     # To test part 3 re-comment out the above lines and 
     # uncomment the following two lines. 
 
-    #secret_word = choose_word(wordlist)
-    #hangman_with_hints(secret_word)
+    secret_word = choose_word(wordlist)
+    hangman_with_hints(secret_word)
