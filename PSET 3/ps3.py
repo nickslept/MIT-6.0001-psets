@@ -1,11 +1,4 @@
 # 6.0001 Problem Set 3
-#
-# The 6.0001 Word Game
-# Created by: Kevin Luu <luuk> and Jenna Wiens <jwiens>
-#
-# Name          : <your name>
-# Collaborators : <your collaborators>
-# Time spent    : <total time>
 
 import math
 import random
@@ -91,8 +84,19 @@ def get_word_score(word, n):
     n: int >= 0
     returns: int >= 0
     """
-    
-    pass  # TO DO... Remove this line when you implement this function
+    first_component = 0
+    second_component = 0
+    #first component calculation
+    for c in word:
+        first_component+=SCRABBLE_LETTER_VALUES[c.lower()] 
+    #second component calculation
+    if ((7*len(word) - 3*(n-len(word))) > 1):
+        second_component = 7*len(word) - 3*(n-len(word))
+    else:
+        second_component = 1
+
+    return first_component*second_component
+
 
 #
 # Make sure you understand how this function works and what it does!
