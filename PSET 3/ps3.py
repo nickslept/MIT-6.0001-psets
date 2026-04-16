@@ -171,9 +171,18 @@ def update_hand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
+    new_hand = hand.copy()
+    for c in word:
+        if new_hand.get(c.lower(), -1) > 0: #there are remaining instances of the char in the hand
+            new_hand[c.lower()] -= 1 
+        else: #the hand never had that character in it OR there are no remaining instances of the char in the hand
+            continue
 
-    pass  # TO DO... Remove this line when you implement this function
+    for key in new_hand.copy():
+        if new_hand[key] == 0:
+            del(new_hand[key])
 
+    return new_hand
 #
 # Problem #3: Test word validity
 #
