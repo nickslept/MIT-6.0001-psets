@@ -183,6 +183,7 @@ def update_hand(hand, word):
             del(new_hand[key])
 
     return new_hand
+
 #
 # Problem #3: Test word validity
 #
@@ -197,9 +198,22 @@ def is_valid_word(word, hand, word_list):
     word_list: list of lowercase strings
     returns: boolean
     """
+    #assembles the string of letters + quantities avaliable in the hand
+    hand_keys = ""
+    for key in hand:
+        hand_keys += key*hand[key]
+    
+    for c in word: #checks that each guessed character is in hand
+        if c.lower() not in hand_keys:
+            return False
+        else: 
+            hand_keys = hand_keys.replace(c.lower(), "", 1) 
 
-    pass  # TO DO... Remove this line when you implement this function
-
+    for w in word_list: #checks that the guessed word is in the list of words
+        if w == word.lower():
+            return True
+    return False
+    
 #
 # Problem #5: Playing a hand
 #
