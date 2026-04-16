@@ -199,15 +199,15 @@ def is_valid_word(word, hand, word_list):
     returns: boolean
     """
     #assembles the string of letters + quantities avaliable in the hand
-    hand_keys = ""
+    hand_as_string = ""
     for key in hand:
-        hand_keys += key*hand[key]
+        hand_as_string += key*hand[key]
     
     for c in word: #checks that each guessed character is in hand
-        if c.lower() not in hand_keys:
+        if c.lower() not in hand_as_string:
             return False
         else: 
-            hand_keys = hand_keys.replace(c.lower(), "", 1) 
+            hand_as_string = hand_as_string.replace(c.lower(), "", 1) 
 
     for w in word_list: #checks that the guessed word is in the list of words
         if w == word.lower():
