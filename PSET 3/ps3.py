@@ -336,16 +336,15 @@ def substitute_hand(hand, letter):
     returns: dictionary (string -> int)
     """
     substituted_hand = hand.copy()
-    if letter not in substituted_hand.keys():
-        amount = substituted_hand[letter]
-        del(substituted_hand[letter])
-        all_letters_list = list(CONSONANTS + VOWELS)
-        for l in all_letters_list:
+    if letter in substituted_hand.keys():
+        available_letters_list = list(CONSONANTS + VOWELS)
+        for l in available_letters_list[:]: #removing all the letters that are already in the hand from the randomizer. iterating over a copy b/c the original list will be modified
             if l in substituted_hand.keys():
-                all_letters_list.remove(l)
-        substituted_hand[random.choice(all_letters_list)] = amount     
+                available_letters_list.remove(l)
+        amount = substituted_hand[letter] #value associated w/ the letter that will be removed; stored to set the newly randomized letter to the amount
+        del(substituted_hand[letter])
+        substituted_hand[random.choice(available_letters_list)] = amount     
     return substituted_hand
-       
     
 def play_game(word_list):
     """
@@ -377,7 +376,10 @@ def play_game(word_list):
 
     word_list: list of lowercase strings
     """
-    
+    used_substitution = False
+    used_replay = False
+    grand_total = 0
+
     print("play_game not implemented.") # TO DO... Remove this line when you implement this function
     
 
