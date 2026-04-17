@@ -378,7 +378,30 @@ def play_game(word_list):
     """
     used_substitution = False
     used_replay = False
-    grand_total = 0
+    grand_total_score = 0
+
+    # ask user total hands
+    # deal hand and store in current_hand
+    # print out the hand (display it)
+
+    # while the user still has hands to play
+        # decrement number of hands left
+        # if they haven't subbed, ask if they wanna sub
+            # if yes 
+                # flip the boolean
+                # ask what letter they wanna sub
+                # run the sub function, update current_hand
+        # play the hand w/ current_hand
+        # store current_hand_score
+        # if they havent replayed ask if the user wants to replay the hand
+            # if yes:
+                # flip the boolean
+                # play again w/ current_hand 
+                # if new score > current_hand_score, then current_hand_score = new score
+        # total_score += current_hand_score
+
+
+
 
     print("play_game not implemented.") # TO DO... Remove this line when you implement this function
     
