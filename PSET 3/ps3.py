@@ -113,7 +113,6 @@ def display_hand(hand):
 
     hand: dictionary (string -> int)
     """
-    
     for letter in hand.keys():
         for j in range(hand[letter]):
              print(letter, end=' ')      # print all on the same line
@@ -244,8 +243,10 @@ def calculate_handlen(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
-    
-    pass  # TO DO... Remove this line when you implement this function
+    hand_length = 0
+    for key in hand:
+        hand_length += hand[key]
+    return hand_length
 
 def play_hand(hand, word_list):
 
@@ -277,39 +278,35 @@ def play_hand(hand, word_list):
       returns: the total score for the hand
       
     """
+    total_score = 0
+    current_hand = hand
+    hand_length = calculate_handlen(current_hand)
+    manual_end = False
+
+    while(hand_length > 0):
+        print("Current Hand:", end=" ") 
+        display_hand(current_hand)
+        guess = input("Enter word, or \"!!\" to indicate that you are finished: ")
+        if(guess=="!!"):
+            manual_end = True
+            break
+        else:
+            if is_valid_word(guess, current_hand, word_list):
+                guess_score = get_word_score(guess, hand_length)
+                total_score += guess_score
+                print("\"" + guess + "\"", "earned", str(guess_score), "points. Total:", str(total_score), "points")
+                print()
+            else:
+                print("That is not a valid word. Please choose another word.")
+                print()
+            current_hand = update_hand(current_hand, guess)
+            hand_length = calculate_handlen(current_hand)
+    if (manual_end):
+        print("Total score:", str(total_score), "points")
+    else:
+        print("Ran out of letters. Total score:", str(total_score), "points")            
     
-    # BEGIN PSEUDOCODE <-- Remove this comment when you implement this function
-    # Keep track of the total score
-    
-    # As long as there are still letters left in the hand:
-    
-        # Display the hand
-        
-        # Ask user for input
-        
-        # If the input is two exclamation points:
-        
-            # End the game (break out of the loop)
-
-            
-        # Otherwise (the input is not two exclamation points):
-
-            # If the word is valid:
-
-                # Tell the user how many points the word earned,
-                # and the updated total score
-
-            # Otherwise (the word is not valid):
-                # Reject invalid word (print a message)
-                
-            # update the user's hand by removing the letters of their inputted word
-            
-
-    # Game is over (user entered '!!' or ran out of letters),
-    # so tell user the total score
-
-    # Return the total score as result of function
-
+    return total_score
 
 
 #
