@@ -313,11 +313,6 @@ def play_hand(hand, word_list):
 # Problem #6: Playing a game
 # 
 
-
-#
-# procedure you will use to substitute a letter in a hand
-#
-
 def substitute_hand(hand, letter):
     """ 
     Allow the user to replace all copies of one letter in the hand (chosen by user)
@@ -340,8 +335,16 @@ def substitute_hand(hand, letter):
     letter: string
     returns: dictionary (string -> int)
     """
-    
-    pass  # TO DO... Remove this line when you implement this function
+    substituted_hand = hand.copy()
+    if letter not in substituted_hand.keys():
+        amount = substituted_hand[letter]
+        del(substituted_hand[letter])
+        all_letters_list = list(CONSONANTS + VOWELS)
+        for l in all_letters_list:
+            if l in substituted_hand.keys():
+                all_letters_list.remove(l)
+        substituted_hand[random.choice(all_letters_list)] = amount     
+    return substituted_hand
        
     
 def play_game(word_list):
