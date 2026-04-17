@@ -9,7 +9,7 @@ CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
 
 SCRABBLE_LETTER_VALUES = {
-    'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
+    '*':0, 'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
 }
 
 # -----------------------------------
@@ -140,10 +140,12 @@ def deal_hand(n):
     hand={}
     num_vowels = int(math.ceil(n / 3))
 
-    for i in range(num_vowels):
+    for i in range(num_vowels-1):
         x = random.choice(VOWELS)
         hand[x] = hand.get(x, 0) + 1
     
+    hand["*"] += 1
+
     for i in range(num_vowels, n):    
         x = random.choice(CONSONANTS)
         hand[x] = hand.get(x, 0) + 1
@@ -201,14 +203,32 @@ def is_valid_word(word, hand, word_list):
     #assembles the string of letters + quantities avaliable in the hand
     hand_as_string = ""
     for key in hand:
-        hand_as_string += key*hand[key]
-    
+        hand_as_string += key*hand[key]        
+
     for c in word: #checks that each guessed character is in hand
         if c.lower() not in hand_as_string:
             return False
         else: 
             hand_as_string = hand_as_string.replace(c.lower(), "", 1) 
 
+    if "*" in word: #dealing with wildcards
+        wildcard_index = word.index("*")
+        spliced_guess = word.replace("*", "", 1).lower()
+        for w in word_list:
+            if len(spliced_guess) != len(w)-1: #skips words that aren't the same length
+                continue
+            else: #words that are the same length
+                if wildcard_index == len(spliced_guess): #the * is at the end
+                    if w[0:wildcard_index] == spliced_guess and w[wildcard_index] in VOWELS:
+                        return True
+                elif wildcard_index == 0: #the * is at the beginning
+                    if w[1:] == spliced_guess and w[0] in VOWELS:
+                        return True
+                else: #the * is in the middle
+                    if w[0:wildcard_index] + w[wildcard_index+1:] == spliced_guess and w[wildcard_index] in VOWELS:
+                        return True
+        return False
+    
     for w in word_list: #checks that the guessed word is in the list of words
         if w == word.lower():
             return True
