@@ -143,7 +143,7 @@ def deal_hand(n):
         x = random.choice(VOWELS)
         hand[x] = hand.get(x, 0) + 1
     
-    hand["*"] += 1
+    hand["*"] = 1
 
     for i in range(num_vowels, n):    
         x = random.choice(CONSONANTS)
@@ -286,7 +286,7 @@ def play_hand(hand, word_list):
     while(hand_length > 0):
         print("Current Hand:", end=" ") 
         display_hand(current_hand)
-        guess = input("Enter word, or \"!!\" to indicate that you are finished: ")
+        guess = input("Please enter a word, or \"!!\" to indicate you are done: ")
         if(guess=="!!"):
             manual_end = True
             break
@@ -302,9 +302,10 @@ def play_hand(hand, word_list):
             current_hand = update_hand(current_hand, guess)
             hand_length = calculate_handlen(current_hand)
     if (manual_end):
-        print("Total score:", str(total_score), "points")
+        print("Total score for this hand:", str(total_score), "points")
     else:
-        print("Ran out of letters. Total score:", str(total_score), "points")            
+        print("Ran out of letters.")
+        print("Total score for this hand:", str(total_score), "points")            
     
     return total_score
 
@@ -379,32 +380,35 @@ def play_game(word_list):
     used_substitution = False
     used_replay = False
     grand_total_score = 0
-
-    # ask user total hands
-    # deal hand and store in current_hand
-    # print out the hand (display it)
-
-    # while the user still has hands to play
-        # decrement number of hands left
-        # if they haven't subbed, ask if they wanna sub
-            # if yes 
-                # flip the boolean
-                # ask what letter they wanna sub
-                # run the sub function, update current_hand
-        # play the hand w/ current_hand
-        # store current_hand_score
-        # if they havent replayed ask if the user wants to replay the hand
-            # if yes:
-                # flip the boolean
-                # play again w/ current_hand 
-                # if new score > current_hand_score, then current_hand_score = new score
-        # total_score += current_hand_score
-
-
-
-
-    print("play_game not implemented.") # TO DO... Remove this line when you implement this function
     
+    hands_left = int(input("Enter total number of hands: "))
+
+    while(hands_left > 0):
+        hands_left -= 1
+        current_hand = deal_hand(HAND_SIZE)
+        print("Current hand:", end=" ")
+        display_hand(current_hand)
+        if not used_substitution:
+            ask_sub = input("Would you like to substitute a letter? ")
+            if (ask_sub == "yes"):
+                used_substitution = True
+                letter_to_replace = input("Which letter would you like to replace: ")
+                current_hand = substitute_hand(current_hand, letter_to_replace)
+            print()
+        current_hand_score = play_hand(current_hand, word_list)
+        print("----------")
+        if not used_replay:
+            ask_replay = input("Would you like to replay the hand? ")
+            if (ask_replay == "yes"):
+                used_replay = True
+                replayed_hand_score = play_hand(current_hand, word_list)
+                if(replayed_hand_score > current_hand_score):
+                    current_hand_score = replayed_hand_score
+        grand_total_score += current_hand_score
+    
+    print("----------")
+    print("Total score over all hands:", str(grand_total_score))
+    return grand_total_score
 
 
 #
