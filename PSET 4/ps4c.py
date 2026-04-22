@@ -67,7 +67,8 @@ class SubMessage(object):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        self.get_message_text = text
+        self.get_valid_words = load_words(WORDLIST_FILENAME)
     
     def get_message_text(self):
         '''
@@ -75,7 +76,7 @@ class SubMessage(object):
         
         Returns: self.message_text
         '''
-        pass #delete this line and replace with your code here
+        return self.get_message_text
 
     def get_valid_words(self):
         '''
@@ -84,7 +85,7 @@ class SubMessage(object):
         
         Returns: a COPY of self.valid_words
         '''
-        pass #delete this line and replace with your code here
+        return self.get_valid_words
                 
     def build_transpose_dict(self, vowels_permutation):
         '''
@@ -105,9 +106,25 @@ class SubMessage(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
+        self.transposed_dict = {}
+        for letter in CONSONANTS_LOWER:
+            self.transposed_dict[letter] = letter
+        for letter in CONSONANTS_UPPER:
+            self.transposed_dict[letter] = letter
+
+        ordered_lower_vowels_list = list(VOWELS_LOWER)
+        index = 0
+        for char in vowels_permutation: #for lowercase vowels
+            self.transposed_dict[str(char)] = ordered_lower_vowels_list[index]
+            index+=1
         
-        pass #delete this line and replace with your code here
-    
+        index = 0 #reset counter for uppercase vowels
+        for char in vowels_permutation: #for uppercase vowels
+            self.transposed_dict[str(char).upper()] = ordered_lower_vowels_list[index].upper()
+            index+=1
+
+        return self.transposed_dict
+          
     def apply_transpose(self, transpose_dict):
         '''
         transpose_dict (dict): a transpose dictionary
