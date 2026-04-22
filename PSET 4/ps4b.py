@@ -286,8 +286,10 @@ if __name__ == '__main__':
     print("expected:", (23, "The quick brown fox jumps over the lazy dog"))
     print("actual:", ciphertext_test_case.decrypt_message())
 
-
-    
-
-    #TODO: best shift value and unencrypted story 
+    # best shift value and unencrypted story 
+    story_cipher = CiphertextMessage(get_story_string())
+    print()
+    print("encrypted STORY:", get_story_string())
+    print()
+    print("actual STORY:", story_cipher.decrypt_message())
 
