@@ -102,16 +102,21 @@ class Message(object):
                  another letter (string). 
         '''
         corrected_shift = shift%26 #unnecessary for now as it's assumed that 0<=shift<26 but useful for later 
-        self.shift_dict = {}
-        shifted_lowercase = string.ascii_lowercase[corrected_shift:] + string.ascii_lowercase[0:corrected_shift] #might need to add self.
-        shifted_uppercase = string.ascii_uppercase[corrected_shift:] + string.ascii_uppercase[0:corrected_shift] #might need to add self.
-
+        shift_dict = {}
+        shifted_lowercase = string.ascii_lowercase[corrected_shift:] + string.ascii_lowercase[0:corrected_shift]
+        shifted_uppercase = string.ascii_uppercase[corrected_shift:] + string.ascii_uppercase[0:corrected_shift]
+        
+        lower_count = 1
         for letter in string.ascii_lowercase:
-            self.shift_dict[letter] = shifted_lowercase
-        for letter in string.ascii_uppercase:
-            self.shift_dict[letter] = shifted_uppercase
+            shift_dict[letter] = shifted_lowercase[lower_count-1:lower_count]
+            lower_count += 1
 
-        return self.shift_dict
+        upper_count = 1
+        for letter in string.ascii_uppercase:
+            shift_dict[letter] = shifted_uppercase[upper_count-1:upper_count]
+            upper_count += 1
+
+        return shift_dict
 
     def apply_shift(self, shift):
         '''
@@ -125,15 +130,15 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         '''
-        self.shift_dict = self.build_shift_dict(self, shift)
-        self.shifted_string = ""
+        shift_dict = self.build_shift_dict(shift)
+        shifted_string = ""
         all_letters = string.ascii_lowercase + string.ascii_uppercase
         for char in self.get_message_text():
             if char not in all_letters:
-                continue
+                shifted_string += char
             else:
-                self.shifted_string += self.shift_dict[char]
-        return self.shifted_string
+                shifted_string += shift_dict[char]
+        return shifted_string
 
 
 
