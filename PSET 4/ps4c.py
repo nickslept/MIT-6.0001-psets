@@ -132,8 +132,13 @@ class SubMessage(object):
         Returns: an encrypted version of the message text, based 
         on the dictionary
         '''
-        
-        pass #delete this line and replace with your code here
+        message = list(self.get_message_text())
+        encryption_dict = self.tranpose_dict
+
+        for char in self.message[:]:
+            self.message[char] = encryption_dict.get(char, self.message[char])
+
+        return str(message)
         
 class EncryptedSubMessage(SubMessage):
     def __init__(self, text):
