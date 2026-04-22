@@ -40,7 +40,7 @@ def is_word(word_list, word):
     False
     '''
     word = word.lower()
-    word = word.strip(" !@#$%^&*()-_+={}[]|\:;'<>?,./\"")
+    word = word.strip(r" !@#$%^&*()-_+={}[]|\:;'<>?,./\"")
     return word in word_list
 
 def get_story_string():
@@ -159,7 +159,11 @@ class PlaintextMessage(Message):
             self.message_text_encrypted (string, created using shift)
 
         '''
-        pass #delete this line and replace with your code here
+        super().__init__(text)
+        self.shift = shift
+        self.encryption_dict = self.build_shift_dict(shift) #double check if self.build ... is correct instead
+        self.message_text_encrypted = self.apply_shift(shift)
+
 
     def get_shift(self):
         '''
@@ -167,15 +171,15 @@ class PlaintextMessage(Message):
         
         Returns: self.shift
         '''
-        pass #delete this line and replace with your code here
-
+        return self.shift
+    
     def get_encryption_dict(self):
         '''
         Used to safely access a copy self.encryption_dict outside of the class
         
         Returns: a COPY of self.encryption_dict
         '''
-        pass #delete this line and replace with your code here
+        return self.encryption_dict.copy()
 
     def get_message_text_encrypted(self):
         '''
@@ -183,7 +187,7 @@ class PlaintextMessage(Message):
         
         Returns: self.message_text_encrypted
         '''
-        pass #delete this line and replace with your code here
+        return self.message_text_encrypted
 
     def change_shift(self, shift):
         '''
@@ -195,7 +199,11 @@ class PlaintextMessage(Message):
 
         Returns: nothing
         '''
-        pass #delete this line and replace with your code here
+        self.shift = shift
+        self.encryption_dict = self.build_shift_dict(shift) #double check if self.build ... is correct instead
+        self.message_text_encrypted = self.apply_shift(self.message_text, shift)
+
+        return None
 
 
 class CiphertextMessage(Message):
