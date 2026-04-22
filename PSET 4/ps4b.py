@@ -55,6 +55,7 @@ def get_story_string():
 ### END HELPER CODE ###
 
 WORDLIST_FILENAME = 'words.txt'
+VALID_WORDS = load_words(WORDLIST_FILENAME)
 
 class Message(object):
     def __init__(self, text):
@@ -68,7 +69,7 @@ class Message(object):
             self.valid_words (list, determined using helper function load_words)
         '''
         self.message_text = text
-        self.valid_words = load_words()
+        self.valid_words = VALID_WORDS
 
     def get_message_text(self):
         '''
@@ -101,10 +102,9 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
-        corrected_shift = shift%26 #unnecessary for now as it's assumed that 0<=shift<26 but useful for later 
         shift_dict = {}
-        shifted_lowercase = string.ascii_lowercase[corrected_shift:] + string.ascii_lowercase[0:corrected_shift]
-        shifted_uppercase = string.ascii_uppercase[corrected_shift:] + string.ascii_uppercase[0:corrected_shift]
+        shifted_lowercase = string.ascii_lowercase[shift:] + string.ascii_lowercase[0:shift]
+        shifted_uppercase = string.ascii_uppercase[shift:] + string.ascii_uppercase[0:shift]
         
         lower_count = 1
         for letter in string.ascii_lowercase:
@@ -217,7 +217,7 @@ class CiphertextMessage(Message):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        super().__init__(text)
 
     def decrypt_message(self):
         '''
@@ -235,22 +235,59 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         '''
-        pass #delete this line and replace with your code here
+        most_words = 0
+        best_shift = 0
+
+        for i in range(0, 26):
+            curr_shift_string = self.apply_shift(i)
+            curr_shift_list = curr_shift_string.split()
+            current_words = 0
+            for e in curr_shift_list:
+                if is_word(self.get_valid_words(), e):
+                    current_words+=1
+            if current_words > most_words:
+                most_words = current_words
+                decrypted_message = curr_shift_string
+                best_shift = i
+
+        return(best_shift, decrypted_message) 
+
+
+            
+
+
 
 if __name__ == '__main__':
 
 #    #Example test case (PlaintextMessage)
-#    plaintext = PlaintextMessage('hello', 2)
-#    print('Expected Output: jgnnq')
-#    print('Actual Output:', plaintext.get_message_text_encrypted())
-#
-#    #Example test case (CiphertextMessage)
-#    ciphertext = CiphertextMessage('jgnnq')
-#    print('Expected Output:', (24, 'hello'))
-#    print('Actual Output:', ciphertext.decrypt_message())
+    plaintext = PlaintextMessage('hello', 2)
+    print('Expected Output: jgnnq')
+    print('Actual Output:', plaintext.get_message_text_encrypted())
 
-    #TODO: WRITE YOUR TEST CASES HERE
+#    #Example test case (CiphertextMessage)
+    ciphertext = CiphertextMessage('jgnnq')
+    print('Expected Output:', (24, 'hello'))
+    print('Actual Output:', ciphertext.decrypt_message())
+
+    #MORE TEST CASES 
+    plaintext_test_case = PlaintextMessage("ABc", 5)
+    print("Expected output: FGh")
+    print("Actual output:", plaintext_test_case.get_message_text_encrypted())
+
+    plaintext_test_case = PlaintextMessage("aCb", 2)
+    print("Expected output: cEd")
+    print("Actual output:", plaintext_test_case.get_message_text_encrypted())
+
+    ciphertext_test_case = CiphertextMessage("EXXEGO ex SRGI")
+    print("Expected output:", (22, "ATTACK at ONCE"))
+    print("actual output:", ciphertext_test_case.decrypt_message())
+
+    ciphertext_test_case = CiphertextMessage("Wkh txlfn eurzq ira mxpsv ryhu wkh odcb grj")
+    print("expected:", (23, "The quick brown fox jumps over the lazy dog"))
+    print("actual:", ciphertext_test_case.decrypt_message())
+
+
+    
 
     #TODO: best shift value and unencrypted story 
-    
-    pass #delete this line and replace with your code here
+
