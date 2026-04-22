@@ -67,7 +67,8 @@ class Message(object):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        self.message_text = text
+        self.valid_words = load_words()
 
     def get_message_text(self):
         '''
@@ -75,7 +76,7 @@ class Message(object):
         
         Returns: self.message_text
         '''
-        pass #delete this line and replace with your code here
+        return self.message_text
 
     def get_valid_words(self):
         '''
@@ -84,7 +85,7 @@ class Message(object):
         
         Returns: a COPY of self.valid_words
         '''
-        pass #delete this line and replace with your code here
+        return self.valid_words.copy()
 
     def build_shift_dict(self, shift):
         '''
@@ -100,7 +101,17 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
-        pass #delete this line and replace with your code here
+        corrected_shift = shift%26 #unnecessary for now as it's assumed that 0<=shift<26 but useful for later 
+        self.shift_dict = {}
+        shifted_lowercase = string.ascii_lowercase[corrected_shift:] + string.ascii_lowercase[0:corrected_shift] #might need to add self.
+        shifted_uppercase = string.ascii_uppercase[corrected_shift:] + string.ascii_uppercase[0:corrected_shift] #might need to add self.
+
+        for letter in string.ascii_lowercase:
+            self.shift_dict[letter] = shifted_lowercase
+        for letter in string.ascii_uppercase:
+            self.shift_dict[letter] = shifted_uppercase
+
+        return self.shift_dict
 
     def apply_shift(self, shift):
         '''
@@ -114,7 +125,18 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         '''
-        pass #delete this line and replace with your code here
+        self.shift_dict = self.build_shift_dict(self, shift)
+        self.shifted_string = ""
+        all_letters = string.ascii_lowercase + string.ascii_uppercase
+        for char in self.get_message_text():
+            if char not in all_letters:
+                continue
+            else:
+                self.shifted_string += self.shift_dict[char]
+        return self.shifted_string
+
+
+
 
 class PlaintextMessage(Message):
     def __init__(self, text, shift):
