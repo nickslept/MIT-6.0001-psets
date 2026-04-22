@@ -21,20 +21,18 @@ def get_permutations(sequence):
     '''
     
     current_first_char = sequence[0]
-    # if length of SEQ == 1 #base case
-        # return [sequence]
-    # if the length of SEQ > 1: (e.g. meats) 
-        #current_permutations = get_permutations(sequence[1:]) #meats --> eats, ats, ts, s; catches the previous permutations
-        #new_permutations = [] #different in each scope
-    # for loop over each word in current permutations (5, 4, 3, 2, 1)
-        # new_permutations.add(current_first_char + word[0:])
-        # for loop from 1 to length of word #might need to be len -1
-            # new_permutations.add(word[0:i] + current_first_char + [i:])
-        # new_permutations.add(word[0:len(word) + current_first_char])
-    # return new_permutations
+    if len(sequence) == 1: #base case
+        return [sequence]
+    if len(sequence) > 1: #(e.g. meats) 
+        current_permutations = get_permutations(sequence[1:]) #meats --> eats, ats, ts, s; catches the previous permutations
+        new_permutations = [] #different in each scope
+    for word in current_permutations: # e.g. when current_first_char in meats in a then curr perms = [ts, st]
+        new_permutations.add(current_first_char + word) #handles placing current_first_char at the beginning of the word
+        for i in range(1, len(word)): #handles placing current_first_char in spots in the middle of the word
+            new_permutations.add(word[0:i] + current_first_char + word[i:])
+        new_permutations.add(word + current_first_char) #handles placing current_first_char at the end of word
+    return new_permutations
 
-    
-    pass #delete this line and replace with your code here
 
 if __name__ == '__main__':
 #    #EXAMPLE
@@ -46,6 +44,6 @@ if __name__ == '__main__':
 #    # Put three example test cases here (for your sanity, limit your inputs
 #    to be three characters or fewer as you will have n! permutations for a 
 #    sequence of length n)
-
+    
     pass #delete this line and replace with your code here
 
