@@ -152,7 +152,8 @@ class EncryptedSubMessage(SubMessage):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        super().__init__(text)
+
 
     def decrypt_message(self):
         '''
@@ -172,7 +173,19 @@ class EncryptedSubMessage(SubMessage):
         
         Hint: use your function from Part 4A
         '''
-        pass #delete this line and replace with your code here
+        permutations = get_permutations("aeiou")
+        best_message = ""
+        highest_words = 0
+        # for each permutation in the permutations list
+            # encrypt the message with the permutation
+            # current word count variable
+            # for each word in the newly encrypted message
+                # if the word is a real word:
+                    # current word count variable += 1
+            # if current word count > highest words
+                # best message = newly encrypted message
+        return best_message
+
     
 
 if __name__ == '__main__':
