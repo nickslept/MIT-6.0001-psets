@@ -42,7 +42,7 @@ def is_word(word_list, word):
     False
     '''
     word = word.lower()
-    word = word.strip(" !@#$%^&*()-_+={}[]|\:;'<>?,./\"")
+    word = word.strip(r" !@#$%^&*()-_+={}[]|\:;'<>?,./\"")
     return word in word_list
 
 
@@ -67,8 +67,8 @@ class SubMessage(object):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        self.get_message_text = text
-        self.get_valid_words = load_words(WORDLIST_FILENAME)
+        self.message_text = text
+        self.valid_words = load_words(WORDLIST_FILENAME)
     
     def get_message_text(self):
         '''
@@ -76,7 +76,7 @@ class SubMessage(object):
         
         Returns: self.message_text
         '''
-        return self.get_message_text
+        return self.message_text
 
     def get_valid_words(self):
         '''
@@ -85,7 +85,7 @@ class SubMessage(object):
         
         Returns: a COPY of self.valid_words
         '''
-        return self.get_valid_words
+        return self.valid_words.copy()
                 
     def build_transpose_dict(self, vowels_permutation):
         '''
@@ -133,13 +133,14 @@ class SubMessage(object):
         on the dictionary
         '''
         message = list(self.get_message_text())
-        encryption_dict = self.tranpose_dict
 
-        for char in self.message[:]:
-            self.message[char] = encryption_dict.get(char, self.message[char])
+        index = 0
+        for char in message[:]:
+            message[index] = transpose_dict.get(char, message[index])
+            index+=1
 
-        return str(message)
-        
+        return ''.join(message)
+
 class EncryptedSubMessage(SubMessage):
     def __init__(self, text):
         '''
