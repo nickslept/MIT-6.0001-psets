@@ -115,12 +115,12 @@ class SubMessage(object):
         ordered_lower_vowels_list = list(VOWELS_LOWER)
         index = 0
         for char in vowels_permutation: #for lowercase vowels
-            self.transposed_dict[str(char)] = ordered_lower_vowels_list[index]
+            self.transposed_dict[ordered_lower_vowels_list[index]] = str(char)
             index+=1
         
         index = 0 #reset counter for uppercase vowels
         for char in vowels_permutation: #for uppercase vowels
-            self.transposed_dict[str(char).upper()] = ordered_lower_vowels_list[index].upper()
+            self.transposed_dict[ordered_lower_vowels_list[index].upper()] = str(char).upper()
             index+=1
 
         return self.transposed_dict
@@ -202,4 +202,22 @@ if __name__ == '__main__':
     enc_message = EncryptedSubMessage(message.apply_transpose(enc_dict))
     print("Decrypted message:", enc_message.decrypt_message())
      
-    #TODO: WRITE YOUR TEST CASES HERE
+    #additional test cases
+    testcase_one = SubMessage("What?! How did he do that")
+    perm_one = "ouaei" #a->o e->u i->a o->e u->i
+    encrypted_dict_one = testcase_one.build_transpose_dict(perm_one)
+    print("Original message:", testcase_one.get_message_text(), "Permutation:", perm_one)
+    print("Expected encryption:", "Whot?! Hew dad hu de thot")
+    print("Actual encryption", testcase_one.apply_transpose(encrypted_dict_one))
+    encrypted_msg_one = EncryptedSubMessage(testcase_one.apply_transpose(encrypted_dict_one))
+    print("Decrypted msg:", encrypted_msg_one.decrypt_message())
+
+    testcase_two = SubMessage("SEQUOIA sequoia")
+    perm_two = "iaeou" #a->i e->a i->e o->o u->u
+    encrypted_dict_two = testcase_two.build_transpose_dict(perm_two)
+    print("Original message:", testcase_two.get_message_text(), "Permutation:", perm_two)
+    print("Expected encryption:", "SAQUOEI saquoei")
+    print("Actual encryption", testcase_two.apply_transpose(encrypted_dict_two))
+    encrypted_msg_two = EncryptedSubMessage(testcase_two.apply_transpose(encrypted_dict_two))
+    print("Decrypted msg:", encrypted_msg_two.decrypt_message())
+
