@@ -174,16 +174,18 @@ class EncryptedSubMessage(SubMessage):
         Hint: use your function from Part 4A
         '''
         permutations = get_permutations("aeiou")
-        best_message = ""
+        best_message = self.get_message_text()
         highest_words = 0
-        # for each permutation in the permutations list
-            # encrypt the message with the permutation
-            # current word count variable
-            # for each word in the newly encrypted message
-                # if the word is a real word:
-                    # current word count variable += 1
-            # if current word count > highest words
-                # best message = newly encrypted message
+        for p in permutations:
+            encryption_dict = self.build_transpose_dict(p)
+            encrypted_message_list = self.apply_transpose(encryption_dict).split()
+            current_words = 0
+            for element in encrypted_message_list:
+                if is_word(self.get_valid_words(), element):
+                    current_words += 1
+            if current_words > highest_words:
+                highest_words = current_words
+                best_message = ' '.join(encrypted_message_list)
         return best_message
 
     
