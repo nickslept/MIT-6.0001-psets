@@ -4,3 +4,5 @@ My solutions to MIT OCW's 6.0001 psets. The course can be found [here](https://o
 My solutions may not always be formatted to match up exactly with the responses they are looking for (e.g. printing out "months:" instead of "Time in months:", given that they are seeking the latter). The codes should (hopefully) still provide acceptable solutions to the problems they are solving. 
 
 *NOTE: AS OF 03/08/2026 THE COMMENT REGARDING THE DIFFERENCE IN FORMATTING IS ONLY APPLICABLE TO PSET #1. Also, I only started logging the solutions on GitHub after I had already completed part B of PSET #1. Therefore, my solution to #1A is not avaliable on here.
+
+6/19/26 update: After completing PSET #4, I became more interested in spending my time trying to develop some passion projects. I may complete the rest of the course in the future, but for now it is uncomplete.
